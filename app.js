@@ -38,4 +38,12 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+var mongoose = require("mongoose");
+var mongoDB = "mongodb+srv://test:test@cluster0.jnovg.mongodb.net/express-members-only?retryWrites=true&w=majority"
+mongoose.connect(mongoDB,  {useNewUrlParser : true, useUnifiedTopology : true});
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, "mongoDB connection error: "));
+
 module.exports = app;
+
+
