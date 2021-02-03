@@ -17,4 +17,4 @@ PostSchema
   return '/catalog/post/' + this._id;
 });
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('Post', PostSchema);

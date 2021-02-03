@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var post_controller = require('../controllers/postController');
+
 
 // GET catalog home page.
 router.get('/', post_controller.index);
