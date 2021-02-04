@@ -1,8 +1,6 @@
 var async = require('async');
 var User = require('../models/user');
 
-
-
 // Display list of all users.
 exports.user_list = function(req, res) {
     res.send('NOT IMPLEMENTED: user list');
@@ -15,7 +13,8 @@ exports.user_detail = function(req, res) {
 
 // Display user create form on GET.
 exports.user_create_get = function(req, res, next) {
-    res.render('user_form', { title: 'Sign Up!'});
+    //res.render('user_form', { title: 'Sign Up!'});
+    res.send('NOT IMPLEMENTED: sign up page ');
 };
 
 // Handle user create on POST.
