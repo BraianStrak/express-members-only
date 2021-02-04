@@ -1,6 +1,8 @@
 var async = require('async');
 var User = require('../models/user');
 
+const { body,validationResult } = require("express-validator");
+
 // Display list of all users.
 exports.user_list = function(req, res) {
     res.send('NOT IMPLEMENTED: user list');
@@ -13,14 +15,31 @@ exports.user_detail = function(req, res) {
 
 // Display user create form on GET.
 exports.user_create_get = function(req, res, next) {
-    //res.render('user_form', { title: 'Sign Up!'});
-    res.send('NOT IMPLEMENTED: sign up page ');
+    res.render('user_form', { title: 'Sign Up!'});
 };
 
 // Handle user create on POST.
-exports.user_create_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: user create POST');
-};
+exports.user_create_post = [
+
+    body('first_name', 'First name required').trim().isLength({ min: 1 }).escape(),
+    body('family_name', 'Family name required').trim().isLength({ min: 1 }).escape(),
+    body('user_name', 'User name required').trim().isLength({ min: 1 }).escape(),
+
+    // Process request after validation and sanitization.
+    (req, res, next) => {
+
+        const errors = validationResult(req);
+    
+        var user = new User (
+            {first_name: req.first_name,
+             family_name: req.family_name,
+             user_name: req.user_name}
+        )
+
+        
+
+    }
+];
 
 // Display user delete form on GET.
 exports.user_delete_get = function(req, res) {
