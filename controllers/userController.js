@@ -25,6 +25,7 @@ exports.user_create_post = [
     body('first_name', 'First name required').trim().isLength({ min: 1 }).escape(),
     body('family_name', 'Family name required').trim().isLength({ min: 1 }).escape(),
     body('user_name', 'User name required').trim().isLength({ min: 1 }).escape(),
+    body('password', 'Password required').isLength({ min: 8 }), //I don't think passwords should be escaped.
 
     // Process request after validation and sanitization.
     (req, res, next) => {
@@ -33,16 +34,16 @@ exports.user_create_post = [
 
         bcrypt.hash("somePassword", 10, (err, hashedPassword) => {
             // if err, do something
-            // otherwise, store hashedPassword in DB
-
+            // otherwise, store hashedPassword+user in DB
             if(err){
                 return next(err);
             } else {
                 var user = new User (
-                    {first_name: req.first_name,
-                     family_name: req.family_name,
-                     user_name: req.user_name,
-                     password: hashedPassword
+                    {first_name: req.body.first_name,
+                     family_name: req.body.family_name,
+                     user_name: req.body.user_name,
+                     password: hashedPassword,
+                     is_member: false,
                     }
                 )
 
@@ -51,6 +52,8 @@ exports.user_create_post = [
                       return next(error);
                     }
                 });
+
+                res.redirect('/user/login');
             }
         });
     }
@@ -74,4 +77,12 @@ exports.user_update_get = function(req, res) {
 // Handle user update on POST.
 exports.user_update_post = function(req, res) {
     res.send('NOT IMPLEMENTED: user update POST');
+};
+
+exports.user_login_get = function(req, res) {
+    res.send('NOT IMPLEMENTED: user login page GET');
+};
+
+exports.user_login_post = function(req, res) {
+    res.send('NOT IMPLEMENTED: user login page POST');
 };

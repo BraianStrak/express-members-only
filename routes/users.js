@@ -27,5 +27,13 @@ router.get(':id', user_controller.user_detail);
 // GET request for list of all user items.
 router.get('/all', user_controller.user_list);
 
+// GET request for user login
+router.get('/login', user_controller.user_login_get);
+
+// POST request for user login
+router.get('/login', user_controller.user_login_post);
+
+
+
 
 module.exports = router;
