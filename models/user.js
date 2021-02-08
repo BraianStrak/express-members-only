@@ -8,6 +8,7 @@ var UserSchema = new Schema(
     family_name: {type: String, required: true, maxlength: 100},
     user_name: {type: String, required: true, maxlength: 100},
     is_member: {type: Boolean, required: true},
+    password: {type: String, required: true, minlength: 8},
   }
 );
 
