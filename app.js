@@ -6,7 +6,7 @@ var logger = require('morgan');
 var bcrypt = require('bcryptjs');
 var LocalStrategy = require ('passport-local');
 const passport = require("passport");
-
+var User = require('./models/user');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -50,7 +50,7 @@ mongoose.connect(mongoDB,  {useNewUrlParser : true, useUnifiedTopology : true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, "mongoDB connection error: "));
 
-passport.use(
+passport.use( //make sure username and password are the same names as in the log in form (I think)
   new LocalStrategy((username, password, done) => {
     User.findOne({ username: username }, (err, user) => {
       if (err) { 

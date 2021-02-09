@@ -1,9 +1,9 @@
 var async = require('async');
-var User = require('../models/post');
+var Post = require('../models/post');
 
 //Display home page of all posts
 exports.index = function(req, res) {
-    res.send('NOT IMPLEMENTED: index page');
+    res.render("index", { user: req.user });
 };
 
 // Display list of all posts.

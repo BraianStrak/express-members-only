@@ -83,5 +83,8 @@ exports.user_login_get = function(req, res) {
 };
 
 exports.user_login_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: user login page POST');
+    passport.authenticate("local", {
+        successRedirect: "/",
+        failureRedirect: "/user/login"
+    })
 };
