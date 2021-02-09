@@ -29,7 +29,6 @@ exports.user_create_post = [
 
     // Process request after validation and sanitization.
     (req, res, next) => {
-
         const errors = validationResult(req);
 
         bcrypt.hash("somePassword", 10, (err, hashedPassword) => {
@@ -80,7 +79,7 @@ exports.user_update_post = function(req, res) {
 };
 
 exports.user_login_get = function(req, res) {
-    res.send('NOT IMPLEMENTED: user login page GET');
+    res.render('user_login_form', { title: 'Log In!'});
 };
 
 exports.user_login_post = function(req, res) {
