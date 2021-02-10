@@ -6,7 +6,7 @@ var UserSchema = new Schema(
   {
     first_name: {type: String, required: true, maxlength: 100},
     family_name: {type: String, required: true, maxlength: 100},
-    user_name: {type: String, required: true, maxlength: 100},
+    username: {type: String, required: true, maxlength: 100},
     is_member: {type: Boolean, required: true},
     password: {type: String, required: true, minlength: 8},
   }
