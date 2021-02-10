@@ -31,7 +31,7 @@ router.get('/all', user_controller.user_list);
 router.get('/login', user_controller.user_login_get);
 
 // POST request for user login
-router.get('/login', user_controller.user_login_post);
+router.post('/login', user_controller.user_login_post);
 
 
 
