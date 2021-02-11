@@ -86,9 +86,10 @@ exports.user_login_get = function(req, res) {
     res.render('user_login_form');
 };
 
-exports.user_login_post = function(req, res) {
+exports.user_login_post = function(req, res, next) {
     passport.authenticate("local", {
       successRedirect: "/",
-      failureRedirect: "/"
-    })
+      failureRedirect: "/",
+      failureFlash: true,
+    })(req, res, next);
 };

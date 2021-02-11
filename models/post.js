@@ -14,7 +14,7 @@ var PostSchema = new Schema(
 PostSchema
 .virtual('url')
 .get(function () {
-  return '/catalog/post/' + this._id;
+  return '/post/' + this._id;
 });
 
 module.exports = mongoose.model('Post', PostSchema);

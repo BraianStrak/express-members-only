@@ -2,9 +2,10 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+const session = require("express-session");
 var logger = require('morgan');
 var bcrypt = require('bcryptjs');
-var LocalStrategy = require ('passport-local');
+var LocalStrategy = require ('passport-local').Strategy;
 const passport = require("passport");
 var User = require('./models/user');
 
@@ -24,6 +25,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//passport and session stuff
+app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.urlencoded({ extended: false }));
+
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
 app.use('/post', postsRouter);
@@ -32,6 +39,7 @@ app.use('/post', postsRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -52,7 +60,7 @@ db.on('error', console.error.bind(console, "mongoDB connection error: "));
 
 passport.use( 
   new LocalStrategy((username, password, done) => {
-    
+
     User.findOne({ username: username }, (err, user) => {
       if (err) { 
         return done(err);
@@ -61,7 +69,6 @@ passport.use(
         return done(null, false, { message: "Incorrect username" });
       }
 
-      //not sure if this is in the correct place
       bcrypt.compare(password, user.password, (err, res) => {
         if (res) {
           // passwords match! log user in
