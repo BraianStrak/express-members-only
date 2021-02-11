@@ -61,7 +61,7 @@ db.on('error', console.error.bind(console, "mongoDB connection error: "));
 passport.use( 
   new LocalStrategy((username, password, done) => {
 
-    User.findOne({ username: username }, (err, user) => {
+    /*User.findOne({ username: username }, (err, user) => {
       if (err) { 
         return done(err);
       };
@@ -71,7 +71,9 @@ passport.use(
 
       bcrypt.compare(password, user.password, (err, res) => {
         if (res) {
-          // passwords match! log user in
+          // passwords match! log user in 
+
+          //Not sure if i am causing an issue here or not, check github for solutions other people have
           return done(null, user)
         } else {
           // passwords do not match!
@@ -80,7 +82,28 @@ passport.use(
       })
 
       return done(null, user);
-    });
+    });*/
+      
+      User.findOne({ username }, (error, user) => {
+        if (error) {
+          return done(error);
+        }
+        if (!user) {
+          return done(null, false, { message: 'User non exitent' });
+        }
+        bcrypt.compare(password, user.password, (err, res) => {
+          if (err) {
+            return done(err);
+          }
+          if (res) {
+            return done(null, user);
+          }
+          return done(null, false, { message: 'Incorrect password' });
+        });
+      });
+
+
+    
   })
 );
 

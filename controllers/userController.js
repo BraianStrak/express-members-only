@@ -87,9 +87,8 @@ exports.user_login_get = function(req, res) {
 };
 
 exports.user_login_post = function(req, res, next) {
-    passport.authenticate("local", {
+    passport.authenticate("local", { //authenticate returns middleware which must be invoked hence the second req, res, next
       successRedirect: "/",
       failureRedirect: "/",
-      failureFlash: true,
     })(req, res, next);
 };
