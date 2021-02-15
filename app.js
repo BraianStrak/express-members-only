@@ -60,49 +60,30 @@ db.on('error', console.error.bind(console, "mongoDB connection error: "));
 
 passport.use( 
   new LocalStrategy((username, password, done) => {
+    console.log("entered local strategy method");
 
-    /*User.findOne({ username: username }, (err, user) => {
-      if (err) { 
-        return done(err);
-      };
-      if (!user) {
-        return done(null, false, { message: "Incorrect username" });
+    User.findOne({ username }, (error, user) => {
+      if (error) {
+        console.log("error in finding user");
+        return done(error);
       }
-
+      if (!user) {
+        console.log("user does not exist");
+        return done(null, false, { message: 'User non existent' });
+      }
       bcrypt.compare(password, user.password, (err, res) => {
+        if (err) {
+          console.log("error in comparing password");
+          return done(err);
+        }
         if (res) {
-          // passwords match! log user in 
-
-          //Not sure if i am causing an issue here or not, check github for solutions other people have
-          return done(null, user)
-        } else {
-          // passwords do not match!
-          return done(null, false, { message: "Incorrect password" })
+          console.log("password correct");
+          return done(null, user);
         }
-      })
-
-      return done(null, user);
-    });*/
-      
-      User.findOne({ username }, (error, user) => {
-        if (error) {
-          return done(error);
-        }
-        if (!user) {
-          return done(null, false, { message: 'User non exitent' });
-        }
-        bcrypt.compare(password, user.password, (err, res) => {
-          if (err) {
-            return done(err);
-          }
-          if (res) {
-            return done(null, user);
-          }
-          return done(null, false, { message: 'Incorrect password' });
-        });
+        console.log("password incorrect");
+        return done(null, false, { message: 'Incorrect password' });
       });
-
-
+    });
     
   })
 );
