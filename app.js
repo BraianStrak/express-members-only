@@ -60,7 +60,7 @@ db.on('error', console.error.bind(console, "mongoDB connection error: "));
 
 passport.use( 
   new LocalStrategy((username, password, done) => {
-    console.log("entered local strategy method");
+    console.log("entered local strategy method for username: " + username + " and password: " + password);
 
     User.findOne({ username }, (error, user) => {
       if (error) {
@@ -72,17 +72,16 @@ passport.use(
         return done(null, false, { message: 'User non existent' });
       }
       bcrypt.compare(password, user.password, (err, res) => {
-        if (err) {
-          console.log("error in comparing password");
-          return done(err);
-        }
         if (res) {
-          console.log("password correct");
-          return done(null, user);
+          // passwords match! log user in
+          console.log("passwords match, logging in");
+          return done(null, user)
+        } else {
+          // passwords do not match!
+          console.log("passwords do not match");
+          return done(null, false, { message: "Incorrect password" })
         }
-        console.log("password incorrect");
-        return done(null, false, { message: 'Incorrect password' });
-      });
+      })
     });
     
   })

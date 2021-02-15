@@ -34,7 +34,7 @@ exports.user_create_post = [
     (req, res, next) => {
         const errors = validationResult(req);
 
-        bcrypt.hash("somePassword", 10, (err, hashedPassword) => {
+        bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
             // if err, do something
             // otherwise, store hashedPassword+user in DB
             if(err){
