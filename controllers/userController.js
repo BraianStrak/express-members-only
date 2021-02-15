@@ -92,3 +92,8 @@ exports.user_login_post = function(req, res, next) {
       failureRedirect: "/",
     })(req, res, next);
 };
+
+exports.user_logout_get = function(req, res) {
+    req.logout();
+    res.redirect("/");
+}
