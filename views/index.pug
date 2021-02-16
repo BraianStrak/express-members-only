@@ -15,8 +15,8 @@ block content
     each post in post_list
       li
         a #{post.title}
-        |  (#{post.description})
-        |  (#{post.user.username})
+        |  #{post.description}
+        |  #{post.user.username}
 
     else
       li There are no books.

@@ -6,6 +6,7 @@ const { body,validationResult } = require("express-validator");
 //Display home page of all posts
 exports.index = function(req, res) {
     Post.find({})
+       .populate('user')
        .exec(function (err, list_posts) {
         if (err) { return next(err); }
         //Successful, so render
