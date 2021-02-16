@@ -1,0 +1,12 @@
+if user
+    form(method='POST' action='')
+        div.form-group
+            label(for='title') Title:
+            input#title.form-control(type='text' placeholder='Title' name='title' required='true')
+        div.form-group
+            label(for='description') Description:
+            input#description.form-control(type='text' placeholder='Post Content' name='description' required='true')
+
+    button.btn.btn-primary(type='submit') Create post
+else
+    p Please log in to create posts!

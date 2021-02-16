@@ -74,7 +74,7 @@ exports.user_delete_post = function(req, res) {
 
 // Display user update form on GET.
 exports.user_update_get = function(req, res) {
-    res.send('NOT IMPLEMENTED: user update GET');
+
 };
 
 // Handle user update on POST.
