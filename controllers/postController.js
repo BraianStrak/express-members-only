@@ -29,6 +29,7 @@ exports.post_create_post = [
     body('description', 'Description required').trim().isLength({ min: 1 }).escape(),
 
     (req, res, next) => {
+        console.log("inside post create post function");
         // Extract the validation errors from a request.
         const errors = validationResult(req);
 
@@ -36,23 +37,26 @@ exports.post_create_post = [
         var post = new Post(
         { 
             title: req.body.title,
-            author: req.body.description,
+            description: req.body.description,
             user: req.user,
-        });
+        })
 
         //if there are errors
         if (!errors.isEmpty()) {
-            res.render('post_form', { user: req.user });
+            console.log("encountered an error creating a post");
+            res.redirect('/post/create');
 
         //if there are no errors
         } else {
+            console.log("saving post");
             post.save(function (err) {
                 if (err) { return next(err); }
                    //successful - redirect to index
-                   res.redirect('/');
-                });
-        }
-}];
+                res.redirect('/');
+            });
+        }    
+    }
+];
 
 // Display post delete form on GET.
 exports.post_delete_get = function(req, res) {
