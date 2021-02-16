@@ -11,6 +11,15 @@ block content
       p You are not a member!
     else
       p You are a member!
+
+    each post in post_list
+      li
+        a #{post.title}
+        |  (#{post.description})
+        |  (#{post.user.username})
+
+    else
+      li There are no books.
   else
     p You are not logged in
 

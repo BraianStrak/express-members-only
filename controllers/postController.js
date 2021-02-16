@@ -5,7 +5,12 @@ const { body,validationResult } = require("express-validator");
 
 //Display home page of all posts
 exports.index = function(req, res) {
-    res.render("index", { user: req.user });
+    Post.find({})
+       .exec(function (err, list_posts) {
+        if (err) { return next(err); }
+        //Successful, so render
+        res.render('index', { title: 'Index', post_list: list_posts, user: req.user });
+    });
 };
 
 // Display list of all posts.
